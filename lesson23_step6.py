@@ -4,8 +4,11 @@ from selenium.webdriver.support.ui import Select
 import time
 import math
 
+
 def calc(x):
-  return str(math.log(abs(12*math.sin(int(x)))))
+    return str(math.log(abs(12 * math.sin(int(x)))))
+
+
 try:
     link = "http://suninjuly.github.io/redirect_accept.html"
     browser = webdriver.Chrome()
@@ -20,15 +23,15 @@ try:
     x_element = browser.find_element_by_css_selector(".nowrap#input_value")
     x = x_element.text
     y = calc(x)
-    
+
     input = browser.find_element_by_css_selector("input#answer")
     input.send_keys(y)
 
     button = browser.find_element_by_css_selector(".btn.btn-primary")
-    
+
     # Отправляем заполненную форму
     dis = button.get_attribute("disabled")
-    if dis!="disabled":
+    if dis != "disabled":
         button.click()
         # ожидание
         time.sleep(10)
@@ -37,4 +40,3 @@ try:
 finally:
     # закрываем браузер после всех манипуляций
     browser.quit()
-
