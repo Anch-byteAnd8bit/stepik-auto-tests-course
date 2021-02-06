@@ -8,11 +8,11 @@ succeed = "Congratulations! You have successfully registered!"
 
 
 def tst(link):
-    # options = webdriver.ChromeOptions()
-    # options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
-    # browser = webdriver.Chrome(options=options)
-    browser = webdriver.Chrome()
+    browser = webdriver.Chrome(options=options)
+    # browser = webdriver.Chrome()
     browser.get(link)
 
     fname = browser.find_element_by_css_selector(".first_block .first")
@@ -36,7 +36,7 @@ def tst(link):
     welcome_text = welcome_text_elt.text
 
     # ожидание чтобы визуально оценить результаты прохождения скрипта
-    time.sleep(10)
+    # time.sleep(10)
     # закрываем браузер после всех манипуляций
     browser.quit()
     return welcome_text
