@@ -6,7 +6,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
 
-answer = str(math.log(int(time.time())))
+
+def answer():
+    return str(math.log(int(time.time())))
+
 
 urls = ["https://stepik.org/lesson/236895/step/1",
         "https://stepik.org/lesson/236896/step/1",
@@ -34,15 +37,16 @@ def test_guest_should_see_login_link(browser, url):
     # простое ожидание открытия страницы 5 сек
     browser.implicitly_wait(7)
     input1 = browser.find_element_by_css_selector(".textarea.string-quiz__textarea.ember-text-area.ember-view")
-    input1.send_keys(answer)
+    input1.send_keys(answer())
     button1 = browser.find_element_by_css_selector(".submit-submission")
     button1.click()
     # ожидание появления элемента
     # time.sleep(3)
-    res = WebDriverWait(browser, 5).until_not(
+    res = WebDriverWait(browser, 5).until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, ".smart-hints__hint"))
-        )
+    )
     # res = browser.find_element_by_css_selector(".smart-hints__hint")
-    assert res == "Correct!", "I's fail =("
+    # assert res.text == "Correct!", "I's fail =("
+    print(res.text)
 
 # запуск: pytest -s -v lesson36_step3.py
