@@ -31,7 +31,7 @@ def browser():
 
 
 @pytest.mark.parametrize('url', urls)
-def test_guest_should_see_login_link(browser, url):
+def test_guest_should_see_login_link(browser, url, txt):
     link = url
     browser.get(link)
     # простое ожидание открытия страницы 5 сек
@@ -41,12 +41,9 @@ def test_guest_should_see_login_link(browser, url):
     button1 = browser.find_element_by_css_selector(".submit-submission")
     button1.click()
     # ожидание появления элемента
-    # time.sleep(3)
     res = WebDriverWait(browser, 5).until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, ".smart-hints__hint"))
     )
-    # res = browser.find_element_by_css_selector(".smart-hints__hint")
-    # assert res.text == "Correct!", "I's fail =("
-    print(res.text)
+    print (res.text)
 
 # запуск: pytest -s -v lesson36_step3.py
