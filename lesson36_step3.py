@@ -1,6 +1,9 @@
 import pytest
 import time
 import math
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
 
 answer = math.log(int(time.time()))
@@ -28,13 +31,20 @@ def browser():
 def test_guest_should_see_login_link(browser, url):
     link = url
     browser.get(link)
-    input1 = browser.find_element_by_css_selector("#ember100")
+    # простое ожидание открытия страницы 5 сек
+    browser.implicitly_wait(5)
+    input1 = browser.find_element_by_css_selector(".textarea.string-quiz__textarea.ember-text-area.ember-view")
     input1.send_keys(answer)
-    like = browser.find_element_by_css_selector("#ember47")
+    like = browser.find_element_by_css_selector(".vote-widget__segment.vote-widget__segment_type_epic")
     like.click()
     button1 = browser.find_element_by_css_selector(".submit-submission")
     button1.click()
-    # ожидание
-    time.sleep(10)
+    # ожидание появления элемента
+    # time.sleep(3)
+    res = WebDriverWait(browser, 5).until_not(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, ".smart-hints__hint"))
+        )
+    # res = browser.find_element_by_css_selector(".smart-hints__hint")
+    assert res == "Correct!", "I's fail =("
 
 # запуск: pytest -s -v lesson36_step3.py
